@@ -8,8 +8,10 @@
 {% unless is_icecream or is_bundle or no_hydroseal %}
         {% if featured_image == image %}
         <div style="position:absolute; z-index:200;left:calc(0px + 80px);"  id="hydrorelease_seal">
-          <p class="nutrition-tag">Gluten-free</p>
-
+          <!-- <p class="nutrition-tag">Keto friendly</p>
+          <p class="nutrition-tag">Paleo friendly</p>
+          <p class="nutrition-tag">Gluten-free</p> -->
+          
         </div>
         {% endif %}
 {% endunless %}
@@ -165,6 +167,8 @@ If Icecream Product make this variable true and custom styles
         border:2px solid black;
         box-shadow: 0 0 0 1px black;
       }
+  
+}
 
       </style>
     
@@ -341,45 +345,22 @@ If Icecream Product make this variable true and custom styles
         
         
         <!-- swatches -->
-<!--          <div class="radio-wrapper js product-form__item custom_variants_img">
+         <div class="radio-wrapper js product-form__item custom_variants_img">
           <label class="single-option-radio__label">
-          	Select Variety
+      
           </label>
           <div class="d-flex custom_variants_images">
-            <div class="child " data-label="Barista Pistachio" data-check="editio">
-              <a href="/collections/seasonal-collection/products/pistachio-barista-edition">
-              	<img src="{{ 'Selector_BAR_Pistachio.png' | file_img_url: 'master' }}" alt=""/>
-                <span>Barista Pistachio</span>
+          
+              
+            <div class="child active" data-label="Plant Based Chicken Starter Kit" data-check="cream">
+              <a href="/collections/sour-cream/products/sour-cream">
+                <img alt src="https://cdn.shopify.com/s/files/1/0066/6360/2223/files/Selector_US_SourCream_V7.jpg?v=1699294915" />
+              	<span>Starter Kit</span>
               </a>
             </div>
-            <div class="child" data-label="Barista Oat" data-check="oat">
-              <a href="/collections/creamer-barista/products/barista-oats">
-              	<img alt="" src="{{ 'Selector_BAR_Oat_Grains.png' | file_img_url: 'master' }}" />
-                <span>Barista Oat</span>
-              </a>
-            </div>
-          	
-            <div class="child" data-label="Barista Almond" data-check="almond">
-              <a href="/collections/creamer-barista/products/barista-almonds">
-                <img alt="" src="{{ 'Selector_BAR_Almond_Nuts.png' | file_img_url: 'master' }}" />
-                <span>Barista Almond</span>              	
-              </a>
-            </div>
-            <div class="child active" data-label="Barista Hemp" data-check="hem">
-              <a href="/collections/creamer-barista/products/barista-hemp">
-  				  <img alt="" src="{{ 'Selector_BAR_Hemp_Seeds.png' | file_img_url: 'master' }}" />
-                <span>Barista Hemp</span>	
-              </a>
-            </div>
-            <div class="child" data-label="Barista Variety" data-check="pack">
-              <a href="/collections/creamer-barista/products/barista-variety-4-packs">
-  				 <img alt="" src="{{ 'Selector_US_Variety.png' | file_img_url: 'master' }}" />
-                <span> Barista Variety</span>
-              </a>
-            </div> 
-            
+              
           </div>
-        </div> -->
+        </div>
         {% unless product.has_only_default_variant %}
         
         
@@ -395,7 +376,6 @@ If Icecream Product make this variable true and custom styles
                       <fieldset class="single-option-radio"
                         name="{{ option.name | handleize }}"
                         id="ProductSelect-option-{{ forloop.index0 }}">
-                         <legend class="sr-only">Select size</legend>
                         {% assign option_index = forloop.index %}
                         {% for value in option.values %}
 
@@ -463,7 +443,10 @@ If Icecream Product make this variable true and custom styles
             {% endif %}
 
             <div class="product__price one-whole" style="padding:0 5px;">
-              {% include 'product-price', variant: current_variant %}
+              {% include 'product-sour-price', variant: current_variant %} 
+              <span style="color:black;font-weight:400; font-size: 12px; color: grey;">Reg. $13.98 + $10 S&H</span>
+              
+             
             </div>
 
           {% if global_MetaData["BESTBYDATE"] != blank %}
@@ -471,7 +454,15 @@ If Icecream Product make this variable true and custom styles
           <h4 class="" style="color:black;font-weight:600">{{ global_MetaData["BESTBYDATE"] }}</h4>
           </div>
           {% endif %}
-        
+
+        {% if global_MetaData["PROMO"] != blank %}
+          <div class="one-whole" style="display:block;padding:0 5px;">
+          <h4 class="" style="color:#2f4c2c;font-weight:600; font-size: 16px;">{{ global_MetaData["PROMO"] }}</h4>
+          </div>
+          {% endif %}
+
+              
+              
         {% comment %} move add to cart below subscription{% endcomment %}
         	{% if product.available %}{% include 'subscription-product' %}{% endif %} 
 
@@ -502,6 +493,28 @@ If Icecream Product make this variable true and custom styles
               {% if section.settings.enable_payment_button %}
                 {{ form | payment_button }}
               {% endif %}
+
+              {% if global_MetaData["PROMO-DESCRIPTION"] != blank %}
+          <div class="one-whole" style="display:block;padding:0 5px; margin-bottom: 20px">
+          <p class="" style="color: grey;font-style: italic;margin-top: 15px;font-size: 11px;font-weight:400;">{{ global_MetaData["PROMO-DESCRIPTION"] }}</p>
+          </div>
+          {% endif %}
+ 
+              
+              {%- comment -%}
+              <div style="text-align: center;">
+				<a style="
+                        color: #2f4c2c;
+                        text-transform: uppercase; 
+                        text-decoration: underline; 
+                        text-align: center;
+                        padding-top: 25px;
+                        font-size: 18px;
+                        font-weight:600;" 
+                 class="klaviyo-bis-trigger" href="#">Notify Me When Available</a>
+              </div>
+              
+              {%- endcomment -%}
 
               {%- comment -%}
               <div>

@@ -198,9 +198,9 @@ If Icecream Product make this variable true and custom styles
 
     <div class="grid__item mobile_version" style="margin-bottom:10px;">
           {% if global_MetaData["PDP_H1"] == blank %}
-          <h2 class="product-single__title">{{ product.title }}</h2>
+          <h1 class="product-single__title">{{ product.title }}</h1>
           {% else %}
-          <h2 class="product-single__title">{{ global_MetaData["PDP_H1"] }}</h2>
+          <h1 class="product-single__title">{{ global_MetaData["PDP_H1"] }}</h1>
           <h2 class="product-single__sub-title">{{ global_MetaData["PDP_H2"] }}</h2>
           {% endif %}
 
