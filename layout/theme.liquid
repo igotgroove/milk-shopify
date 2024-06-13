@@ -1,0 +1,469 @@
+<!doctype html>
+<html class="no-js" lang="{{ shop.locale }}">
+<head>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8J8EH80BJB"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8J8EH80BJB');
+</script>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="{{ settings.color_button }}">
+  <link rel="canonical" href="{{ canonical_url }}">
+  
+{% if canonical_url contains 'recipes?page=' %}
+<meta name="robots" content="noindex" />
+{% endif %}
+
+  <meta name="google-site-verification" content="hhnjjG_UQ868drmk9UVype2uYr05lPiPlEohKAVVHow" />
+  <meta name="facebook-domain-verification" content="ah3kmpefhvxkuiw8lnyl0c182zf1sh" />
+  
+
+  {%- if settings.favicon != blank -%}
+    <link rel="shortcut icon" href="{{ settings.favicon | img_url: '32x32' }}" type="image/png">
+  {%- endif -%}
+
+  {%- capture seo_title -%}
+    {%- if template == 'search' and search.performed == true -%}
+
+      {% assign hidden_count = 0 %}
+        {% for item in search.results %}
+          {% for tag in item.tags %}
+            {% if tag contains 'xsearch' %}
+              {% assign hidden_count = hidden_count | plus:1 %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+
+        {% assign total_search_count = search.results_count | minus: hidden_count %}
+        
+
+      {{ 'general.search.heading' | t: count: total_search_count }}: {{ 'general.search.results_with_count' | t: terms: search.terms, count: total_search_count }}
+    {%- else -%}
+      {{ page_title }}
+    {%- endif -%}
+    {%- if current_tags -%}
+      {%- assign meta_tags = current_tags | join: ', ' -%} &ndash; {{ 'general.meta.tags' | t: tags: meta_tags -}}
+    {%- endif -%}
+    {%- if current_page != 1 -%}
+      &ndash; {{ 'general.meta.page' | t: page: current_page }}
+    {%- endif -%}
+    {%- assign escaped_page_title = page_title | escape -%}
+    {%- unless escaped_page_title contains shop.name -%}
+      &ndash; {{ shop.name }}
+    {%- endunless -%}
+  {%- endcapture -%}
+  <title>{{ seo_title | strip }}</title>
+
+  {%- if page_description -%}
+    <meta name="description" content="{{ page_description | escape }}">
+  {%- endif -%}
+
+  {% include 'social-meta-tags' %}
+
+  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:200,200i,300,300i,400,400i,600,600i,700,700i" rel="stylesheet">
+  
+    <link rel="preload" href="{{ '1925MVP.scss.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+  <link href="{{ '1925MVP.scss.css' | asset_url }}" rel="stylesheet" type="text/css" media="all" />
+
+    <link rel="preload" href="{{ 'theme.scss.css' | asset_url }}" as="style" onload="this.rel='stylesheet'">
+  <link href="{{ 'theme.scss.css' | asset_url }}" rel="stylesheet" type="text/css" media="all" />
+
+  
+  <script>
+    var ElmhurstData = {
+      template : '{{template.name}}'
+    }
+    
+    var theme = {
+      strings: {
+        addToCart: {{ 'products.product.add_to_cart' | t | json }},
+        soldOut: {{ 'products.product.sold_out' | t | json }},
+        unavailable: {{ 'products.product.unavailable' | t | json }},
+        regularPrice: {{ 'products.product.regular_price' | t | json }},
+        sale: {{ 'products.product.on_sale' | t | json }},
+        showMore: {{ 'general.filters.show_more' | t | json }},
+        showLess: {{ 'general.filters.show_less' | t | json }},
+        addressError: {{ 'sections.map.address_error' | t | json }},
+        addressNoResults: {{ 'sections.map.address_no_results' | t | json }},
+        addressQueryLimit: {{ 'sections.map.address_query_limit_html' | t | json }},
+        authError: {{ 'sections.map.auth_error_html' | t | json }},
+        newWindow: {{ 'general.accessibility.link_messages.new_window' | t | json }},
+        external: {{ 'general.accessibility.link_messages.external' | t | json }},
+        newWindowExternal: {{ 'general.accessibility.link_messages.new_window_and_external' | t | json }}
+      },
+      moneyFormat: {{ shop.money_format | json }}
+    }
+
+    document.documentElement.className = document.documentElement.className.replace('no-js', 'js');
+      
+      
+      
+      
+      
+  </script>
+
+  {%- if template.directory == 'customers' -%}
+    <script src="{{ 'shopify_common.js' | shopify_asset_url }}" defer="defer"></script>
+  {%- endif -%}
+
+  <script src="{{ 'lazysizes.js' | asset_url }}" async="async"></script>
+
+  <script src="{{ 'vendor.js' | asset_url }}"></script>
+  <script src="{{ 'theme.js' | asset_url }}" defer="defer"></script>
+  <script src="{{ 'custom_landing_pages.js' | asset_url }}" defer="defer"></script>
+
+  <script src="{{ 'stickybits.min.js' | asset_url }}"></script>
+
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />
+  <script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.js" defer="defer"></script>
+
+{% comment %}
+  
+  
+  
+   <!-- script for Microsoft ads tracking - Manash -->
+  <script>
+  (function(w,d,t,r,u)
+  {
+    var f,n,i;
+    w[u]=w[u]||[],f=function()
+    {
+      var o={ti:" 5933391"}; 
+      o.q=w[u],w[u]=new UET(o),w[u].push("pageLoad") 
+    },
+    n=d.createElement(t),n.src=r,n.async=1,n.onload=n.onreadystatechange=function()
+    {
+      var s=this.readyState;
+      s&&s!=="loaded"&&s!=="complete"||(f(),n.onload=n.onreadystatechange=null)
+    },
+    i=d.getElementsByTagName(t)[0],i.parentNode.insertBefore(n,i)
+  })
+  (window,document,"script","//bat.bing.com/bat.js","uetq");
+</script>
+  
+  <script> window.uetq = window.uetq || []; window.uetq.push('event', ' ', {"revenue_value":13.98,"currency":"USD"} ); </script>
+  
+  
+  {{ content_for_header }}
+{%- render 'bold-common' -%}{% endcomment %}
+                                                                                                                    {% include 'content_for_header' %}
+  {%- if template contains "page" -%}
+
+  <link rel="stylesheet" type="text/css" href="//cdn.jsdelivr.net/npm/@accessible360/accessible-slick@1.0.1/slick/accessible-slick-theme.min.css">
+
+  
+  {%- endif -%}
+
+{% if handle contains 'quotes-video' %}
+<meta name="robots" content="noindex">
+{% endif %}
+
+  <meta name="pinterest-rich-pin" content="true" />
+  
+  
+  <!-- Lead Forensics Tracking Code -->
+  
+  <script type="text/javascript" src="https://secure.plug1luge.com/js/207496.js"></script>
+ <noscript><img src="https://secure.plug1luge.com/207496.png" alt="" style="display:none;" /></noscript>
+  
+{% if template == 'index' %}
+{% if settings.home_vendor_carousel_enable %} 
+{{ 'slick.css' | asset_url | stylesheet_tag }}
+{{ 'slick-theme.css' | asset_url | stylesheet_tag }}
+{% endif %}
+{% endif %}
+  
+
+
+
+
+  
+  
+ 
+  {% render 'easy-gdpr-settings' %}
+  
+ 
+<!-- Hotjar Tracking Code for https://elmhurst1925.com/ -->
+<script>
+    (function(h,o,t,j,a,r){
+        h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
+        h._hjSettings={hjid:2755986,hjsv:6};
+        a=o.getElementsByTagName('head')[0];
+        r=o.createElement('script');r.async=1;
+        r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
+        a.appendChild(r);
+    })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
+</script>  
+
+<!-- Pagination - duplicate content issue fixer - Manash -->
+  <script>
+    if($(".pagination").length) {
+
+    var fniv = $(".pagination .prev").next("span").find("a").attr("href");
+
+    if(fniv.indexOf("?page=1") >= 0) {
+
+  let newval = fniv.replace('?page=1','');
+
+      $(".pagination .prev").next("span").find("a").attr("href", newval);
+
+    }
+
+    if($(".pagination .prev").length){
+
+    if($(".pagination .prev a").attr("href").indexOf("?page=1") >= 0) {
+
+          let newval = fniv.replace('?page=1','');
+
+          $(".pagination .prev a").attr("href", newval);
+
+    }
+
+    }
+
+  }
+  </script>
+
+<!--  <!--MNTN Conversion Pixel-->
+<!-- Install ONLY on conversion page/event-->
+
+
+  <!-- MNTN Shopify DataLayer -->
+<!-- copy the entire file contents and paste inside the theme.liquid file inside the head -->
+{% if product %}
+   <script type="text/javascript" async>
+      let mntn_product_name = {{product.title | json}}
+      let mntn_product_price = {{product.price | money_without_trailing_zeros | json}}
+      let mntn_product_image = {{product.featured_image | json}}
+      let mntn_product_sku = {{product.id | json}}     
+      let mntn_product_in_stock = {{product.available | json}}
+      let mntn_product_data = {{product | json}}
+   </script>
+{% endif %}
+{% if cart.item_count > 0 %}
+   <script type="text/javascript" async>
+      let mntn_cart_quantity = {{cart.item_count | json}}
+      let mntn_cart_value = {{cart.items_subtotal_price | money_without_trailing_zeros | json}}
+      let mntn_cart_data = {{cart | json}}
+   </script>
+{% endif %}
+</head> 
+
+<body class="template-{{ template | split: '.' | first }}">
+  
+  <!-- slide cart snippet to increase startup time --> 
+
+<script>
+
+
+  !function(){window.SLIDECART=!0;window.SLIDECART_FORMAT='{{shop.money_format}}';var e="https://cdn.jsdelivr.net/gh/apphq/slidecart-dist@master/slidecarthq.js?"+(new Date).getTime(),t=document.createElement("script");t.type="text/javascript",t.src=e,document.querySelector("body").appendChild(t)}();</script>
+
+
+  {% include 'GTM-Body' %}
+
+
+  <a class="in-page-link visually-hidden skip-link" href="#MainContent">{{ 'general.accessibility.skip_to_content' | t }}</a>
+
+  <div id="SearchDrawer" class="search-bar drawer drawer--top" role="dialog" aria-modal="true" aria-label="{{ 'general.search.placeholder' | t }}">
+    <div class="search-bar__table">
+      <div class="search-bar__table-cell search-bar__form-wrapper">
+        <form class="search search-bar__form" action="{{ routes.search_url }}" method="get" role="search">
+          <input type="hidden" name="type" value="product">
+                    <input class="search__input search-bar__input" type="search" name="q" value="{{ search.terms | escape }}" placeholder="{{ 'general.search.placeholder' | t }}" aria-label="{{ 'general.search.placeholder' | t }}">
+          <button class="search-bar__submit search__submit btn--link" type="submit">
+            {% include 'icon-search' %}
+            <span class="icon__fallback-text">{{ 'general.search.submit' | t }}</span>
+          </button>
+        </form>
+      </div>
+      <div class="search-bar__table-cell text-right">
+        <button type="button" class="btn--link search-bar__close js-drawer-close">
+          {% include 'icon-close' %}
+          <span class="icon__fallback-text">{{ 'general.search.close' | t }}</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  {% section 'header' %}
+
+  <div class="page-container {% if template.name == 'article' %} blog-overflow {%- endif -%}" id="PageContainer">
+
+    <main class="main-content js-focus-hidden" id="MainContent" role="main" tabindex="-1">
+      {{ content_for_layout }}
+    </main>
+
+    {%- if template != "cart" -%}
+    {% section 'footer' %}
+
+    
+
+    
+    {%- endif -%}
+    
+    
+    <div id="slideshow-info" class="visually-hidden" aria-hidden="true">
+      {{- 'sections.slideshow.navigation_instructions' | t -}}
+    </div>
+
+  </div>
+
+  <ul hidden>
+    <li id="a11y-refresh-page-message">{{ 'general.accessibility.refresh_page' | t }}</li>
+    <li id="a11y-selection-message">{{ 'general.accessibility.selection_help' | t }}</li>
+  </ul>
+
+{% if template contains 'product' %}
+<script async type="text/javascript" data-api-key="" id="stamped-script-widget" src="https://cdn-stamped-io.azureedge.net/files/widget.min.js"></script>
+{% include 'subscription-theme-footer' %}
+
+  {% endif %}
+{% include 'back-to-top' %}
+
+
+  
+<!-- script for account creation redirect- Manash  -->
+  	<script>
+
+
+      (function() {
+        var REDIRECT_PATH = '/pages/welcome';
+
+        var selector = '#create_customer, form[action$="/account"][method="post"]',
+            $form = document.querySelectorAll(selector)[0];
+
+        if ($form) {
+          $redirect = document.createElement('input');
+          $redirect.setAttribute('name', 'return_to');
+          $redirect.setAttribute('type', 'hidden');
+          $redirect.value = REDIRECT_PATH;
+          $form.appendChild($redirect);
+        }
+      })();
+      
+    </script>
+  
+ 
+  {% include 'GTM-Head' %}
+
+ <script src="{{ 'custom.min.js' | asset_url }}" defer></script>
+
+  
+  {% include 'smile-initializer' %}
+  
+  <!-- script for out of stock email notification- Manash  -->
+  
+  <script src="https://a.klaviyo.com/media/js/onsite/onsite.js"></script>
+<script>
+    var klaviyo = klaviyo || [];
+    klaviyo.init({
+      account: "MEUu2D",
+      list: 'Lb4cTK',
+      platform: "shopify"
+    });
+    klaviyo.enable("backinstock",{ 
+    trigger: {
+      product_page_text: "Notify Me When Available",
+      product_page_class: "btn",
+      product_page_text_align: "center",
+      product_page_margin: "0px",
+      
+      replace_anchor: true
+    },
+    modal: {
+     headline: "{product_name}",
+     newsletter_subscribe_label: "Add me to your email list.",
+     subscribe_checked: true,
+     body_content: "Sign up to receive a notification when this item comes back in stock.",
+     email_field_label: "Email",
+     button_label: "Notify me when available",
+     subscription_success_label: "You're in! We'll let you know when it's back.",
+     footer_content: '',
+     additional_styles: "@import url('https://fonts.googleapis.com/css?family=Helvetica+Neue');",
+     drop_background_color: "#000",
+     background_color: "#fff",
+     text_color: "#222",
+     button_text_color: "#fff",
+     button_background_color: "#2f4c2c",
+     close_button_color: "#ccc",
+     error_background_color: "#fcd6d7",
+     error_text_color: "#C72E2F",
+     success_background_color: "#d3efcd",
+     success_text_color: "#1B9500"
+    }
+  });
+</script>
+
+
+  <!--TSH -->
+  <script>
+ document.addEventListener(
+   "mouseup",
+   function (event) {
+     if (event.target.matches("button.incubate-collections-add-to-cart-add-to-cart-button, button.incubate-collections-add-to-cart-add-to-cart-button *")) {
+       try {
+         if (window.SLIDECART_STATE().settings.enabled) {
+           setTimeout(function () {
+             window.SLIDECART_UPDATE();
+             window.SLIDECART_OPEN();
+           }, 600);
+           setTimeout(function () {
+             window.SLIDECART_UPDATE();
+           }, 1200);
+         }
+       } catch (err) {
+       }
+     }
+   },
+   false
+ );
+    console.log('hola')
+</script>
+<!--TSH -->
+  <script>
+ document.addEventListener(
+   "click",
+   function (event) {
+     if (event.target.matches("button.incubate-collections-add-to-cart-add-to-cart-button, button.incubate-collections-add-to-cart-add-to-cart-button *")) {
+       try {
+         if (window.SLIDECART_STATE().settings.enabled) {
+           setTimeout(function () {
+             window.SLIDECART_UPDATE();
+             window.SLIDECART_OPEN();
+           }, 600);
+           setTimeout(function () {
+             window.SLIDECART_UPDATE();
+           }, 1200);
+         }
+       } catch (err) {
+       }
+     }
+   },
+   false
+ );
+    console.log('hola')
+</script>
+ <!-- END TSH --> 
+
+<!-- xSellco widget 36foca0d5 --><script>(window._xsq||(function(x,s){window._xsq=[];var d=function(){var c,b,a=document.createElement("iframe");a.src="javascript:false";a.title="";a.role="presentation";(a.frameElement||a).style.cssText="display: none";document.body.appendChild(a);try{b=a.contentWindow.document}catch(g){c=document.domain,a.src="javascript:var d=document.open();d.domain='"+c+"';void(0);",b=a.contentWindow.document}b.open()._l=function(){var a=this.createElement("script");c&&(this.domain=c);a.id="js-iframe-async";a.src="https://"+x+s;this.body.appendChild(a)};b.write('<body onload="document._l();">');b.close()};window.addEventListener?window.addEventListener("load",d,!1):window.attachEvent?window.attachEvent("onload",d):setTimeout(d,2E3);return _xsq})('widgets.xsellco.com','/js/widgets.js')).push(['load','36foca0d5',document.scripts[document.scripts.length - 1]]);</script><!-- End Edesk widget 36foca0d5 -->
+
+  <!--MNTN Tracking Pixel-->
+<!-- INSTALL ON ALL PAGES OF SITE-->
+<script type="text/javascript">
+	(function(){"use strict";var e=null,b="4.0.0",
+	n="34738",
+	additional="term=value",
+	t,r,i;try{t=top.document.referer!==""?encodeURIComponent(top.document.referrer.substring(0,2048)):""}catch(o){t=document.referrer!==null?document.referrer.toString().substring(0,2048):""}try{r=window&&window.top&&document.location&&window.top.location===document.location?document.location:window&&window.top&&window.top.location&&""!==window.top.location?window.top.location:document.location}catch(u){r=document.location}try{i=parent.location.href!==""?encodeURIComponent(parent.location.href.toString().substring(0,2048)):""}catch(a){try{i=r!==null?encodeURIComponent(r.toString().substring(0,2048)):""}catch(f){i=""}}var l,c=document.createElement("script"),h=null,p=document.getElementsByTagName("script"),d=Number(p.length)-1,v=document.getElementsByTagName("script")[d];if(typeof l==="undefined"){l=Math.floor(Math.random()*1e17)}h="dx.mountain.com/spx?"+"dxver="+b+"&shaid="+n+"&tdr="+t+"&plh="+i+"&cb="+l+additional;c.type="text/javascript";c.src=("https:"===document.location.protocol?"https://":"http://")+h;v.parentNode.insertBefore(c,v)})()
+</script>
+</body>
+  
+  
+  
+                  
+</html>

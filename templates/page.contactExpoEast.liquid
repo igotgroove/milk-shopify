@@ -1,0 +1,83 @@
+<div class="page-width page-content">
+  <div class="grid">
+    <div class="grid__item">
+      <div class="section-header text-center">
+        <h1 class="content">{{ page.title | upcase }}</h1>
+      </div>
+
+      {% if page.content.size > 0 %}
+        <div class="" style="text-align:center;margin-bottom:20px;font-size:26px;font-weight:700;">
+          {{ page.content }}
+        </div>
+      {% endif %}
+
+      <div class="grid__item one-whole" style="margin-bottom:55px;">
+      <div class="contact-form form-vertical small--text-center">
+        {%- assign formId = 'ContactForm' -%}
+        {% form 'contact', id: formId %}
+          {% include 'form-status', form_id: formId %}
+
+          <div class="grid grid--half-gutters">
+
+            <div class="grid__item medium-up--one-half">
+              <label class="screen-reader-text" for="{{ formId }}-first-name">{{ 'contact.form.first_name' | t }}</label>
+              <input class="contact" type="text" id="{{ formId }}-first-name" name="contact[first_name]" value="{% if form[name] %}{{ form[first_name] }}{% elsif customer %}{{ customer.first_name }}{% endif %}" placeholder="First Name*" aria-required="true" required>
+            </div>
+
+            <div class="grid__item medium-up--one-half">
+              <label class="screen-reader-text" for="{{ formId }}-last-name">{{ 'contact.form.last_name' | t }}</label>
+              <input class="contact" type="text" id="{{ formId }}-last-name" name="contact[last_name]" value="{% if form[name] %}{{ form[last_name] }}{% elsif customer %}{{ customer.last_name }}{% endif %}" placeholder="Last Name*" aria-required="true" required>
+            </div>
+
+            <div class="grid__item">
+              <label class="screen-reader-text" for="{{ formId }}-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+              <input
+                type="email"
+                class="contact"
+                id="{{ formId }}-email"
+                name="contact[email]"
+                placeholder="Email*"
+                autocorrect="off"
+                autocapitalize="off"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                aria-required="true"
+                required
+                {%- if form.errors contains 'email' -%}
+                  class="input--error"
+                  aria-invalid="true"
+                  aria-describedby="{{ formId }}-email-error"
+                {%- endif -%}
+                >
+              {%- if form.errors contains 'email' -%}
+                <span id="{{ formId}}-email-error" class="input-error-message">{% include 'icon-error' %} {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+              {%- endif -%}
+            </div>
+
+            <div class="grid__item" style="display:none;">
+            <input class="contact" type="hidden" id="{{ formId }}-order-number" name="contact[order-number]" pattern="[0-9\-]*" value="ExpoEast2019" placeholder="Order Number">
+          </div>
+          
+
+          <div class="grid__item">
+            <label class="screen-reader-text" for="{{ formId }}-phone">{{ 'contact.form.phone' | t }}</label>
+            <input class="contact" type="tel" id="{{ formId }}-phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="Phone">
+          </div>
+
+
+        </div>
+
+          <p style="color:#128757">* indicates required field</p>
+
+          <input type="submit" class="btn" value="{{ 'contact.form.submit' | t }}" style="padding-left:50px;padding-right:50px;font-weight:600;font-size:18px;">
+
+        {% endform %}
+      
+      </div>      
+    </div>
+
+        
+
+
+    </div>
+  </div>
+</div>

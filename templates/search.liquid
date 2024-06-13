@@ -1,0 +1,170 @@
+{% comment %} Added by Matt C, Shopify Theme Support April 9 2019 {% endcomment %}
+
+{% case settings.search_grid %}
+  {% when '2' %}
+    {%- assign max_height = 530 -%}
+  {% when '3' %}
+    {%- assign max_height = 345 -%}
+  {% when '4' %}
+    {%- assign max_height = 250 -%}
+  {% when '5' %}
+    {%- assign max_height = 195 -%}
+{% endcase %}
+ 
+{% if settings.search_layout == 'grid' %}
+  {%- assign limit = settings.search_grid | times: settings.search_rows -%}
+{% else %}
+  {%- assign limit = 10 -%}
+{% endif %}
+{% paginate search.results by limit %}
+
+<div class="page-width">
+  {% if search.performed == false %}
+    <div class="text-center">
+      <h1 class="h2">{{ 'general.search.title' | t }}</h1>
+  {% else %}
+    <div class="section-header text-center">
+      <h1 class="h2">
+
+        {% assign hidden_count = 0 %}
+        {% for item in search.results %}
+          {% for tag in item.tags %}
+            {% if tag contains 'xsearch' %}
+              {% assign hidden_count = hidden_count | plus:1 %}
+            {% endif %}
+          {% endfor %}
+        {% endfor %}
+
+        {% assign total_search_count = search.results_count | minus: hidden_count %}
+
+        <span class="visually-hidden">{{ 'general.search.heading' | t: count: total_search_count }}:</span>
+        {{ 'general.search.results_with_count' | t: terms: search.terms, count: total_search_count }}
+      </h1>
+  {% endif %}
+      <div class="grid">
+        <div class="grid__item medium-up--two-fifths medium-up--push-three-tenths">
+          <form action="{{ routes.search_url }}" method="get" role="search" class="search">
+            
+            {% comment %}
+            ONLY SEARCH PRODUCTS -BD
+            {% endcomment %}
+            <input type="hidden" name="type">
+
+            
+            <div aria-live="polite" class="form-message form-message--error search-result-error-message hide" data-search-error-message>
+              <ul id="error-search-form">
+                <li>{{ 'general.search.empty_search_message' | t }}</li>
+              </ul>
+            </div>
+
+            <div class="input-group">
+              <input type="search"
+                id="SearchInput"
+                class="input-group__field search__input"
+                name="q"
+                value="{{ search.terms | escape }}"
+                placeholder="{{ 'general.search.placeholder' | t }}"
+                aria-label="{{ 'general.search.placeholder' | t }}"
+                >
+              <span class="input-group__btn">
+                <button id="SearchResultSubmit" class="btn search__submit" type="submit">{{ 'general.search.submit' | t }}</button>
+              </span>
+            </div>
+          </form>
+        </div>
+      </div>
+
+      {% if search.performed and total_search_count == 0 %}
+        <hr class="hr--small hr--invisible" aria-hidden="true" />
+        <div class="rte">
+          <p>{{ 'general.search.no_results_html' | t: link: routes.root_url }}</p>
+        </div>
+      {% endif %}
+  </div>
+</div>
+
+{% if search.performed %}
+  {% if total_search_count > 0 %}
+    <hr aria-hidden="true" />
+  {% endif %}
+  <h2 class="visually-hidden">{{ 'general.search.heading' | t: count: total_search_count }}</h2>
+  {% if settings.search_layout == 'list' %}
+  <ul class="page-width list-view-items">
+    {% for item in search.results %}
+    {% unless item.tags contains 'xsearch' %}
+      <li class="list-view-item">
+          {% if item.object_type == 'product' %}
+            {% include 'product-card-list', product: item %}
+          {% else %}
+            <div class="product-card product-card--list">
+              <a href="{{ item.url }}" class="full-width-link">
+                <span class="visually-hidden">{{ item.title }}</span>
+              </a>
+              <div class="list-view-item__link">
+                {% if item.image %}
+                  <div class="list-view-item__image-column">
+                    <div class="list-view-item__image-wrapper product-card__image-wrapper">
+                      <img class="list-view-item__image" src="{{ item.image.src | img_url: '600x600' }}" alt="{{ item.image.alt | escape }}">
+                    </div>
+                  </div>
+                {% endif %}
+
+                <div class="list-view-item__title-column">
+                  <div class="list-view-item__title" aria-hidden="true">
+                    <span class="product-card__title">{{ item.title }}</span>
+                  </div>
+                  <div>
+                    {% if item.published_at %}{{ item.published_at | date: "%b %d, %Y" }} &#8212; {% endif %}
+                    {{ item.content | strip_html | truncate: 200 }}
+                  </div>
+                </div>
+              </div>
+            </div>
+          {% endif %}
+      </li>
+      {% endunless %}
+    {% endfor %}
+  </ul>
+  {% else %}
+  <div class="page-width">
+    <div class="grid grid--uniform grid--view-items">
+      {% case settings.search_grid %}
+      {% when '2' %}
+        {%- assign grid_item_width = 'medium-up--one-half' -%}
+      {% when '3' %}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-third' -%}
+      {% when '4' %}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-quarter' -%}
+      {% when '5' %}
+        {%- assign grid_item_width = 'small--one-half medium-up--one-fifth' -%}
+      {% endcase %}
+      {% assign content_limit = 180 | divided_by: settings.search_grid %}
+      {% for item in search.results %}
+      {% unless item.tags contains 'xsearch' %}
+        {% if item.object_type == 'product' %}
+          <div class="grid__item {{ grid_item_width }}">
+            {% include 'product-card-grid', product: item, max_height: max_height %}
+          </div>
+        {% else %}
+          <div class="grid__item {{ grid_item_width }}">
+            <a href="{{ item.url }}" class="grid-view-item__link">
+              <span class="grid-search__page-content">
+                <h3 class="h4 grid-view-item__title">{{ item.title }}</h3>
+                
+                {{ item.content | strip_html | truncatewords: content_limit }}
+              </span>
+            </a>
+          </div>
+        {% endif %}
+        {% endunless %}
+      {% endfor %}
+    </div>
+  </div>
+  {% endif %}
+
+  {% if paginate.pages > 1 %}
+    {% include 'pagination' %}
+  {% endif %}
+{% endif %}
+
+{% endpaginate %}

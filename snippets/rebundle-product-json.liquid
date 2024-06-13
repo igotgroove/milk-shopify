@@ -1,0 +1,215 @@
+{%- assign selected_variant = product.selected_or_first_available_variant -%}
+{%- capture is_bundle -%}
+  {%- if selected_variant.metafields.rebundle.config != blank -%}true{%- else -%}false{%- endif -%}
+{%- endcapture -%}  
+{%- assign subscription_data = product.metafields.subscriptions -%}
+{%- assign selling_plans = product.selling_plan_groups -%}
+{%- assign rebundle_settings = product.metafields.rebundle.settings -%}
+{%- assign addons_collection_handle = rebundle_settings.addons.collectionHandle -%}
+{%- assign cross_sells_collection_handle = rebundle_settings.crossSells.collectionHandle -%}
+{%- assign filter_keys = rebundle_settings.filters -%}
+{%- assign items_types = '' | split: '' -%}
+{%- assign items_vendors = '' | split: '' -%}
+
+{%- comment -%} variants data {%- endcomment -%}
+{%- capture variants_data -%}
+  [
+    {%- for variant in product.variants -%}
+      {%- comment -%} product swap with ReCharge flows {%- endcomment -%}
+      {%- assign has_swap = false -%}
+      {%- if variant.metafields.rebundle.swap != blank -%}
+        {%- assign swap_handle =  variant.metafields.rebundle.swap.handle -%}
+        {%- assign swap_variant_id = variant.metafields.rebundle.swap.variantId -%}
+        {%- assign swap_product = all_products[swap_handle] -%}
+        {%- if swap_product != blank and swap_variant_id != blank -%}
+          {%- assign has_swap = true -%}
+        {%- endif -%}
+      {%- endif -%}
+
+      {
+        "id": {{ variant.id }},
+        "title": {{ variant.title | json }},
+        "price": "{{ variant.price | money_without_currency }}",
+        "compareAtPrice": "{{ variant.compare_at_price | money_without_currency }}",
+        "image": "{{ variant.image | img_url: '600x' }}",
+        "available": {{ variant.available }},
+        "options": {{ variant.options | json }},
+        "requiresSellingPlan": {{ variant.requires_selling_plan | json }},
+        "sellingPlanAllocation": {{ variant.selling_plan_allocations.size }},
+        "rebundleConfig": {{ variant.metafields.rebundle.config | json }},
+        "sellingPlanAllocations": [
+          {%- for selling_plan_allocation in variant.selling_plan_allocations -%}
+            {
+              "compareAtPrice": {{ selling_plan_allocation.compare_at_price }},
+              "perDeliveryPrice": {{ selling_plan_allocation.per_delivery_price | json }},
+              "price": {{ selling_plan_allocation.price | json }},
+              "unitPrice": {{ selling_plan_allocation.unit_price | json }},
+              "sellingPlan": {{ selling_plan_allocation.selling_plan | json }},
+              "sellingPlanGroupId": {{ selling_plan_allocation.selling_plan_group_id | json }}
+            }{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ],
+        "hasSwap": {{ has_swap }}{%- if has_swap -%},
+        "swap": {
+          "product": {{ swap_product | json }},
+          "subscriptionData": {{ swap_product.metafields.subscriptions | json }},
+          {% for property in variant.metafields.rebundle.swap %}
+            "{{ property | first }}": {{ property | last | json }}{% unless forloop.last %},{% endunless %}
+          {% endfor %}
+        }{%- endif -%}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+{%- endcapture -%}
+
+{%- comment -%} contents by variant {%- endcomment -%}
+{%- capture contents_by_variant -%}
+  {
+    {%- for variant in product.variants -%}
+      {%- assign data_sources = variant.metafields.rebundle.config.dataSources -%}
+      "{{ variant.id }}": [
+        {%- for source in data_sources -%}
+          {%- if source.type == 'collection' -%}
+            {%- assign collection_handle = source.handle -%}
+            {%- assign source_collection = collections[collection_handle] -%}
+            {%- assign collection_types = source_collection.products | map: 'type' | uniq -%}
+            {%- assign collection_vendors = source_collection.products | map: 'vendor' | uniq -%}
+            {%- assign items_types = items_types | concat: collection_types -%}
+            {%- assign items_vendors = items_vendors | concat: collection_vendors -%}
+          {%- endif -%}
+          {
+            "id": "{{ source_collection.id }}",
+            "title": {{ source_collection.title | json }},
+            "description": "",
+            "itemsCount": {{ source.itemsCount | json }},
+            "products": {{ source_collection.products | json }}
+          }{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ]{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  }
+{%- endcapture -%}
+
+{%- comment -%} addons data {%- endcomment -%}
+{%- if addons_collection_handle != blank -%}
+  {%- assign addons_collection = collections[addons_collection_handle] -%}
+  {%- capture addon_products -%}
+    [
+      {%- for addon_product in addons_collection.products -%}
+        {%- assign addon_subscription_data = addon_product.metafields.subscriptions -%}
+        {%- assign addon_selected_variant = addon_product.selected_or_first_available_variant -%}
+        {%- capture addon_variants_data -%}
+          [
+            {%- for variant in addon_product.variants -%}
+              {
+                "id": {{ variant.id }},
+                "title": {{ variant.title | json }},
+                "image": "{{ variant.image | img_url: '600x' }}",
+                "price": "{{ variant.price | money_without_currency }}",
+                "compareAtPrice": "{{ variant.compare_at_price | money_without_currency }}",
+                "available": {{ variant.available }},
+                "options": {{ variant.options | json }},
+                "sellingPlanAllocations": [
+                  {%- for selling_plan_allocation in variant.selling_plan_allocations -%}
+                    {
+                      "compareAtPrice": {{ selling_plan_allocation.compare_at_price }},
+                      "perDeliveryPrice": {{ selling_plan_allocation.per_delivery_price | json }},
+                      "price": {{ selling_plan_allocation.price | json }},
+                      "unitPrice": {{ selling_plan_allocation.unit_price | json }},
+                      "sellingPlan": {{ selling_plan_allocation.selling_plan | json }},
+                      "sellingPlanGroupId": {{ selling_plan_allocation.selling_plan_group_id | json }}
+                    }{%- unless forloop.last -%},{%- endunless -%}
+                  {%- endfor -%}
+                ]
+              }{%- unless forloop.last -%},{%- endunless -%}
+            {%- endfor -%}
+          ]
+        {%- endcapture -%}
+
+        {
+          "id": "{{ addon_product.id }}",
+          "title": {{ addon_product.title | json }},
+          "description": {{ addon_product.description | json }},
+          "defaultVariantId": "{{ addon_selected_variant.id }}",
+          "variants": {{ addon_variants_data }},
+          "featured_image": "{{ addon_product.featured_image | img_url: '600x' }}",
+          "images": {{ addon_product.images | json }},
+          "price": "{{ addon_product.price | money_without_currency }}",
+          "compareAtPrice": "{{ addon_product.compare_at_price | money_without_currency }}",
+          "available": {{ addon_product.available }},
+          "options": {{ addon_product.options_with_values | json }},
+          "subscriptionData": {{ addon_subscription_data | json }},
+          "requiresSellingPlan": {{ addon_product.requires_selling_plan | json }},
+          "sellingPlanGroups": {{ addon_product.selling_plan_groups | json }}
+        }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  {%- endcapture -%}
+{%- endif -%}
+{%- capture addons -%}
+  {
+    {%- if addon_products -%}
+      "products": {{ addon_products }}
+    {%- endif -%}
+  }
+{%- endcapture -%}
+
+{%- comment -%} filters data {%- endcomment -%}
+{%- capture filters -%}
+[
+  {%- for key in filter_keys -%}
+    {% assign items_types = items_types | uniq | join: ',' | replace: ',,', ',' | split: ',' %}
+    {% assign items_vendors = items_vendors | uniq %}
+    {%- if key == 'type' and items_types.size > 1 -%}
+      {
+        "key": {{ key | json }},
+        "name": "type",
+        "source": "type",
+        "type": "checkbox",
+        "match": "any",
+        "options": {{ items_types | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- elsif key == 'vendor' and items_vendors.size > 1 -%}  
+      {
+        "key": {{ key | json }},
+        "name": "vendors",
+        "source": "vendor",
+        "type": "checkbox",
+        "match": "any",
+        "options": {{ items_vendors | uniq | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- elsif shop.metafields.rb_filter[key] != blank -%}
+      {%- assign filter = shop.metafields.rb_filter[key] -%}
+      {
+        "key": {{ key | json }},
+        "name": {{ filter.name | json }},
+        "source": "tag",
+        "type": {{ filter.type | json }},
+        "match": {{ filter.match | json }},
+        "options": {{ filter.options | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endif -%}
+  {%- endfor -%}
+]
+{%- endcapture -%}
+
+{
+  "id": "{{ product.id }}",
+  "title": {{ product.title | json }},
+  "isBundle": {{ is_bundle | json }},
+  "options": {{ product.options_with_values | json }},
+  "defaultVariantId": "{{ selected_variant.id }}",
+  "rebundleSettings": {{ rebundle_settings | json }},
+  "available": {{ product.available }},
+  "variants": {{ variants_data }},
+  "subscriptionData": {{ subscription_data | json }},
+  "sellingPlanGroups": {{ selling_plans | json }},
+  "requiresSellingPlan": {{ product.requires_selling_plan | json }},
+  "url": "{{ product.url | url_encode }}",
+  "contentsByVariant": {{ contents_by_variant }},
+  "inventoryLevels": {{ shop.metafields.rebundle.levels | json }},
+  "addons": {{ addons }},
+  "crossSells": { "products": {{ collections[cross_sells_collection_handle].products | json }} },
+  "filters": {{ filters }},
+  "shopSettings": {% if shop.metafields.rebundle.settings != blank %}{{ shop.metafields.rebundle.settings }}{% else %}{}{% endif %}
+}

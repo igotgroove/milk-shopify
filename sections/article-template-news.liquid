@@ -1,0 +1,190 @@
+{% assign current_articleMeta = article.metafields.global %}
+
+<div class="section-header medium-down--text-center" style="margin-bottom:0">
+  <div class="page-width" style="max-width:1500px;width:100%;">
+    {% if current_articleMeta['H1_Title'] %} 
+    <h1 class="article__title content" style="max-width:100%; text-align:center;">{{ current_articleMeta['H1_Title'] }}</h1>
+    {% else %}
+    <h1 class="article__title content" style="max-width:100%; text-align:center;">{{ article.title }}</h1>
+    {% endif %}
+  </div>
+</div>
+
+<div class="rte">
+  <div class="blog-flex-container">
+
+    {% if current_articleMeta['Header_Image_Desktop'] and current_articleMeta['Header_Image_Mobile'] %} 
+    <p class="text-center one-whole">
+      <img src="{{ current_articleMeta['Header_Image_Desktop'] | file_img_url: 'master' }}" alt="" class="small--hide one-whole blog-hero-image lazyload" />
+
+      <img src="{{ current_articleMeta['Header_Image_Mobile'] | file_img_url: 'master' }}" alt="" class="medium-up--hide one-whole no-print lazyload" />
+    </p>
+
+    {% endif %}
+
+    <div class="page-width-blog-news-main">
+      {{ article.content }}
+
+      <div id="sharing">
+      {% if section.settings.show_share_buttons %}
+        {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+      {% endif %}
+      </div>
+
+    </div>
+
+    {% comment %}
+    Pull in 4 newest recipes, and showcase 3 of them that arent the currently viewed recipe -BD
+    {% endcomment %}
+    <div class="page-width-blog-news-side">
+      <h2 class="blog-sidebar underline">Newest Articles</h2>
+      {% paginate blogs.news.articles by 4 %}
+      {% assign article_counter = 0 %}
+        {% for articleData in blogs.news.articles %}
+          {% if article_counter < 3 %}
+            {% if articleData.handle != article.handle %}
+              <div class="blog-sidebar-section"><img src="{{ articleData.image.src | img_url: '250x' }}" alt="{{ articleData.image.alt }}" class="blog-sidebar-image lazyload" />
+              <div class="blog-sidebar-product-text">
+                <a href="{{articleData.url}}" title="{{articleData.title}}"><h3 class="blog-sidebar">{{articleData.title}}</h3></a>
+                {% if articleData.excerpt %}
+                  <p class="blog-sidebar">{{articleData.excerpt}}</p>
+                {% endif %}
+                <a href="{{articleData.url}}" alt="" class="btn btn--secondary btn--small text-center blog-sidebar-button" aria-label="Read more {{articleData.title}}">Read More</a></div>
+              </div>
+            {% else %}
+              {% continue %}
+            {% endif %}
+            {% assign article_counter = article_counter | plus: 1 %}
+          {% endif %}
+        {% endfor %}
+      {% endpaginate %}
+      
+        {% assign featuredProduct = current_articleMeta['Product_Featured'] %}
+        {% assign featuredProductData = all_products[featuredProduct] %}
+        {% assign featuredProductMeta = featuredProductData.metafields.global %}
+        {% assign featuredProductMetaCA = featuredProductData.metafields.ChannelAdvisor %}
+
+
+        <div class="sticky-cta-parent">
+
+            {% if featuredProductMetaCA['casualtitle'] %}
+              <div class="blog-sidebar-product"><img class="blog-sidebar-image-cta lazyload" src="{{ featuredProductData.featured_image | img_url: '300x' }}" />
+              <p class="content-product-title text-center">{{featuredProductMetaCA['casualtitle']}}</p>
+              <!-- <p class="content-product-subtitle text-center" style="line-height: 1.5;">{{featuredProductMeta['PDP_H2']}}</p> -->
+              <a href="{{featuredProductData.url}}" class="btn btn--small text-center" style="justify-content: center;">Buy Now</a></div>
+            {% endif %}
+
+        
+          
+
+            {% comment %}
+            <a href="/pages/friendsgiving-ebook-optin" title="Download Friendsgiving Ebook">
+                <img class="blog-sidebar-image-cta" style="padding-top:30px;" src="{{ 'SideBar_FriendsgivingEbook_NativeAd.jpg' | file_img_url: '200x' }}" />
+              </a>
+            {% endcomment %}
+
+          
+            {% comment %} 
+            <div style="padding: 5px 15px 15px; border: 3px solid #128757; display: flex; flex-direction: column;">
+              <img alt="10 Desserts Ebook" class="blog-sidebar-image-cta" src="{{ '10Desserts_Ebook_Cover.jpg' | file_img_url: '200x' }}" />
+              <p class="content-large text-center" style="margin-bottom: 0; line-height: 1;">FREE!</p>
+              <p class="content-small text-center recipe-content-small" style="margin-bottom: 15px; line-height: 1.5;font-size:20px;">10 Dairy-free Dessert Recipes</p>
+              <a href="/pages/dessert-ebook-optin" class="btn btn--small text-center" style="justify-content: center;">DOWNLOAD</a>
+            </div>
+            {% endcomment %}
+
+          {% comment %} --Holiday ebook Manash 
+
+          <div class="sticky-cta-child">
+     
+
+            <div style="padding: 5px 15px 15px; border: 3px solid #128757;display: flex; flex-direction: column;">
+              <img alt="14 Recipes For Ultimate Holiday Season" class="blog-sidebar-image-cta" src="{{ 'Holiday_Ebook_Thumbnail.png' | file_img_url: '200x' }}" />
+              <p class="content-large text-center" style="margin-bottom: 0; line-height: 1;">FREE!</p>
+              <p class="content-small text-center recipe-content-small" style="margin-bottom: 15px; line-height: 1.5;font-size:20px;">14 Recipes For Ultimate Plant-Based Holiday Season</p>
+              <a href="/pages/14-holiday-recipes-signup" class="btn btn--small text-center" style="justify-content: center;">DOWNLOAD</a>
+            </div>
+            
+
+
+          </div>
+           {% endcomment %}
+
+
+
+        </div>
+
+      </div>
+
+  </div>
+</div>
+
+
+<script defer="defer">// <![CDATA[
+$('.sticky-cta-child').stickybits({ stickyBitStickyOffset: 20 });
+// ]]></script>
+
+{% comment %}
+{% if section.settings.show_share_buttons %}
+  {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+{% endif %}
+{% endcomment %}
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Posts",
+    "en": "Posts",
+    "es": "Publicaciones",
+    "fr": "Articles",
+    "it": "Articoli",
+    "ja": "投稿",
+    "pt-BR": "Posts"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "blog_show_author",
+      "label": {
+        "de": "Autor anzeigen",
+        "en": "Show author",
+        "es": "Mostrar autor",
+        "fr": "Afficher l'auteur",
+        "it": "Mostra autore",
+        "ja": "執筆者を表示する",
+        "pt-BR": "Exibir autor(a)"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "de": "Datum anzeigen",
+        "en": "Show date",
+        "es": "Mostrar fecha",
+        "fr": "Afficher la date",
+        "it": "Mostra data",
+        "ja": "日付を表示する",
+        "pt-BR": "Exibir data"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": {
+        "de": "Buttons für Social Media anzeigen",
+        "en": "Show social sharing buttons",
+        "es": "Mostrar botones para compartir en redes sociales",
+        "fr": "Afficher les boutons de partage sur les médias sociaux",
+        "it": "Mostra i pulsanti per la condivisione sui social",
+        "ja": "ソーシャル共有ボタンを表示する",
+        "pt-BR": "Exibir botões de compartilhamento em redes sociais"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}

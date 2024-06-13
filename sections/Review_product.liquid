@@ -1,0 +1,34 @@
+<div class="product-template__container page-width"
+  id="ProductSection-{{ section.id }}"
+  data-section-id="{{ section.id }}"
+  data-section-type="product"
+  data-enable-history-state="true">
+{% unless hide_reviews %}
+  <div id="stamped-main-widget"   
+    data-widget-style="standard" 
+    data-product-id="{{ product.id }}"   
+    data-name="{{ product.title | escape }}"   
+    data-url="{{ shop.url }}{{ product.url }}"   
+    data-image-url="{{ product.featured_image | product_img_url: "large" |replace: '?', '%3F' | replace: '&','%26'}}" 
+    data-description="{{ product.description | escape }}"   
+    data-product-sku="{{product.handle}}"
+    data-product-type="{{product.type}}">   
+    {{ product.metafields.stamped.reviews }}   
+  </div>
+  {% endunless %}
+{% comment %}
+  {% include 'product_content_snippet' %}
+  {% endcomment %}
+  </div>
+{% schema %}
+  {
+    "name": "Product Reviews",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

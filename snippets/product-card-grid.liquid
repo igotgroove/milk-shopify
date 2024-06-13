@@ -1,0 +1,17 @@
+{% unless grid_image_width %}
+  {%- assign grid_image_width = '600x600' -%}
+{% endunless %}
+
+{% assign CA_MetaData = product.metafields.ChannelAdvisor %}
+
+<div class="grid-view-item{% unless product.available %} product-price--sold-out grid-view-item--sold-out{% endunless %}">
+  <a class="grid-view-item__link {% if product.images.size > 1 %}{% unless product.tags contains "Variety" or product.tags contains "Ice Cream" or product.tags contains "Bundle" %} has-secondary{% endunless %}{% endif %}" href="{{ product.url | within: collection }}">
+    <img class="grid-view-item__image lazyload" src="{{ product.featured_image.src | img_url: grid_image_width }}" alt="{{ product.featured_image.alt }}">
+    {% if product.images.size > 1 %}
+    {% unless product.tags contains "Variety" or product.tags contains "Ice Cream" or product.tags contains "Bundle" %}
+     <img class="grid-view-item__image-secondary lazypreload" src="{{ product.images[1] | img_url: grid_image_width }}" alt="{{ product.images[1].alt | escape }}">
+     {% endunless %}
+    {% endif %}
+    <div class="h4 grid-view-item__title product-card__title" aria-hidden="true">{{ CA_MetaData['casualtitle'] }}</div>
+  </a>
+</div>

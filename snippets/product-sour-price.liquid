@@ -1,0 +1,74 @@
+<!-- snippet/product-price.liquid -->
+{% if variant.title %}
+  {%- assign compare_at_price = variant.compare_at_price -%}
+  {%- assign price = variant.price -%}
+  {%- assign available = variant.available -%}
+{% else %}
+  {%- assign compare_at_price = 1999 -%}
+  {%- assign price = 1999 -%}
+  {%- assign available = true -%}
+{% endif %}
+
+{%- assign money_price = price | money -%}
+
+<dl class="price{% if compare_at_price > price %} price--on-sale{% endif %}" data-price style="{% if template contains 'product' %}{% else %}justify-content: center;{% endif %}">
+
+  {% if section.settings.show_vendor %}
+    <div class="price__vendor">
+      <dt>
+        <span class="visually-hidden">{{ 'products.product.vendor' | t }}</span>
+      </dt>
+      <dd>
+        {{ product.vendor }}
+      </dd>
+    </div>
+  {% endif %}
+
+  <!-- Regular Price -->
+  <div class="price__regular" {% if is_icecream %}style="width:100%;"{% endif %}>
+    <dt>
+      <span class="visually-hidden visually-hidden--inline">{{ 'products.product.regular_price' | t }}</span>
+    </dt>
+    <dd>
+      <span class="price-item__label" data-regular-price-promo-pre aria-hidden="true">
+        {% if is_icecream and compare_at_price > price %}Retail value if purchased separately: {% endif %}
+      </span>
+      <span class="price-item price-item--regular" data-regular-price>
+          {% if compare_at_price > price %}
+            {{ compare_at_price | money }}
+          {% else %}
+            {{ money_price }}
+          {% endif %}
+      </span>
+      <span style="color:black;font-weight:400; font-size: 15px;">Shipping included</span>
+    </dd>
+  </div>
+
+<!-- Sale Price -->
+  <div class="price__sale" {% if is_icecream and compare_at_price > price %}style="color:#e61417"{% endif %}>
+    <dt>
+      <span class="visually-hidden visually-hidden--inline">{{ 'products.product.sale_price' | t }}</span>
+    </dt>
+    <dd>
+      <span class="price-item__label" data-sale-price-promo-pre aria-hidden="true">
+        {% if is_icecream and compare_at_price > price %}Bundle Price*: {% endif %}
+      </span>
+
+      <span class="price-item price-item--sale" data-sale-price>
+        {{ money_price }}
+      </span>
+
+      <span class="price-item__label" data-sale-price-promo-post aria-hidden="true">{% if compare_at_price > price %}
+        {% if is_icecream %}
+           (You Save {{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round | divided_by: 5 | round | times: 5 }}%)
+        {% else %}
+          ({{ current_variant.compare_at_price | minus: current_variant.price | times: 100.0 | divided_by: current_variant.compare_at_price | round }}% Savings)
+        {% endif %}
+      {% endif %}
+      </span>
+
+    </dd>
+    <dd><span class="ice_cream_supplies_last" style="font-size:14px;{% unless compare_at_price > price and is_icecream %}display:none;{% endunless %}">*while supplies last</span></dd>
+  </div>
+
+</dl>

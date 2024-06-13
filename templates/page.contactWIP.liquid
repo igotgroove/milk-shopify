@@ -1,0 +1,161 @@
+<div class="page-width page-content">
+  <div class="grid">
+    <div class="grid__item">
+<!--       <div class="section-header text-center">
+        <h1 class="content">{{ page.title | upcase }}</h1>
+      </div> -->
+      
+      <div class="section-header text-center">
+        <h1 style="text-transform: none;">Contact Us</h1>
+      </div>
+
+      {% if page.content.size > 0 %}
+        <div class="">
+          {{ page.content }}
+        </div>
+      {% endif %}
+
+      
+      <div class="grid__item one-whole" style="margin-bottom:55px;">
+
+        <section class="content text-center">
+<!--           <p style="font-weight:600;">July 3<sup>rd</sup> & 4<sup>th</sup> we will have limited email and phone support available. During this time please contact us using the form below 
+              if possible. We apologize for any inconvenience.</p> -->
+        <p style="font-weight:600;">We are currently experiencing high volumes of inquiries and working to answer everyone as quickly as possible, but as a small team there may be a 3-4 day lead time. Due to this, we are unable to accommodate order changes or address updates prior to shipping at this time.</p>
+
+            <!-- <p style="font-weight:600;">For urgent matters, please contact us via phone at <a href="tel:18883561925">1.888.356.1925</a>, M-F, 10am-5pm Eastern Time.</p> -->
+        </section> 
+        
+
+
+        <div class="powr-form-builder" id="c5764064_1585671185"></div><script src="https://www.powr.io/powr.js?platform=shopify"></script>
+
+
+      {% comment %}
+      <div class="contact-form form-vertical small--text-center">
+        {%- assign formId = 'ContactForm' -%}
+        {% form 'contact', id: formId %}
+          {% include 'form-status', form_id: formId %}
+
+          <div class="grid grid--half-gutters">
+
+            <div class="grid__item medium-up--one-half">
+              <label class="screen-reader-text" for="{{ formId }}-first-name">{{ 'contact.form.first_name' | t }}</label>
+              <input class="contact" type="text" id="{{ formId }}-first-name" name="contact[first_name]" value="{% if form[name] %}{{ form[first_name] }}{% elsif customer %}{{ customer.first_name }}{% endif %}" placeholder="First Name*" aria-required="true" required>
+            </div>
+
+            <div class="grid__item medium-up--one-half">
+              <label class="screen-reader-text" for="{{ formId }}-last-name">{{ 'contact.form.last_name' | t }}</label>
+              <input class="contact" type="text" id="{{ formId }}-last-name" name="contact[last_name]" value="{% if form[name] %}{{ form[last_name] }}{% elsif customer %}{{ customer.last_name }}{% endif %}" placeholder="Last Name*" aria-required="true" required>
+            </div>
+
+
+
+            <div class="grid__item">
+              <label class="screen-reader-text" for="{{ formId }}-email">{{ 'contact.form.email' | t }} <span aria-hidden="true">*</span></label>
+              <input
+                type="email"
+                class="contact"
+                id="{{ formId }}-email"
+                name="contact[email]"
+                placeholder="Email*"
+                autocorrect="off"
+                autocapitalize="off"
+                value="{% if form.email %}{{ form.email }}{% elsif customer %}{{ customer.email }}{% endif %}"
+                aria-required="true"
+                required
+                {%- if form.errors contains 'email' -%}
+                  class="input--error"
+                  aria-invalid="true"
+                  aria-describedby="{{ formId }}-email-error"
+                {%- endif -%}
+                >
+              {%- if form.errors contains 'email' -%}
+                <span id="{{ formId}}-email-error" class="input-error-message">{% include 'icon-error' %} {{ form.errors.translated_fields['email'] | capitalize }} {{ form.errors.messages['email'] }}.</span>
+              {%- endif -%}
+            </div>
+          
+
+          <div class="grid__item">
+            <label class="screen-reader-text" for="{{ formId }}-phone">{{ 'contact.form.phone' | t }}</label>
+            <input class="contact" type="tel" id="{{ formId }}-phone" name="contact[phone]" pattern="[0-9\-]*" value="{% if form[phone] %}{{ form[phone] }}{% elsif customer %}{{ customer.phone }}{% endif %}" placeholder="Phone">
+          </div>
+
+          <div class="grid__item">
+            <label class="screen-reader-text" for="{{ formId }}-order-number">{{ 'contact.form.order_number' | t }}</label>
+            <input class="contact" type="text" id="{{ formId }}-order-number" name="contact[order-number]" pattern="[0-9\-]*" value="{% if form[order-number] %}{{ form[order-number] }}{% endif %}" placeholder="Order Number">
+          </div>
+
+        </div>
+
+
+          <label class="screen-reader-text" for="{{ formId }}-message">{{ 'contact.form.message' | t }}</label>
+          <textarea class="contact" rows="10" id="{{ formId }}-message" name="contact[body]" placeholder="Message*" aria-required="true" required>{% if form.body %}{{ form.body }}{% endif %}</textarea>
+
+          <p style="color:#128757">* indicates required field</p>
+
+          <input type="submit" class="btn" value="{{ 'contact.form.submit' | t }}" style="padding-left:50px;padding-right:50px;font-weight:600;font-size:18px; background:#2f4c2c;">
+
+        {% endform %}
+      
+      </div>      
+      {% endcomment %}
+    </div>
+
+<div class="grid__item one-whole text-center">
+      <section class="content">
+      <!-- <h3 class="faq-contact">Phone</h3>
+      <p class=""><a href="tel:18883561925">1.888.356.1925</a>
+      <br/>
+      Monday - Friday
+      <br/>
+      10am - 5pm EST
+      </p> -->
+
+      {% comment %}
+      <h3 class="faq-contact">Email</h3>
+      <p><a href="mailto:cs@elmhurst1925.com">cs@elmhurst1925.com</a></p>
+      {% endcomment %}
+
+      <h3 class="faq-contact">Address</h3>
+      <p><a href="https://goo.gl/maps/3pcFFLtF4WMSW2Yt9">1200 Maple Road
+      <br/>
+        Elma, NY 14059</a></p>
+      </section>
+      </div>
+        <h2 class="faq-contact">FAQs</h2>
+
+        <section class="content">
+        <button class="accordion">WHAT ARE YOUR NATURAL FLAVORS</button>
+            <div class="panel"><p>All of our natural flavors are plant-based – derived from spices, fruits, vegetables, herbs, roots other plant materials. They are considered safe by the FDA and American Vegetarian Association, and are non-GMO and gluten-free.</p>
+          </div>
+      </section>
+
+          <section class="content">
+        <button class="accordion">ARE ALL OF YOUR PRODUCTS PROCESSED IN THE SAME FACILITY?</button>
+            <div class="panel">
+              <p>Yes, all of our products are made in a single facility in Elma, New York. Quality protocols – including ingredient segregation, cleaning of equipment, and robust testing – are in place throughout the manufacturing process to protect product integrity, including prevention of allergen cross-contamination.</p>
+            </div>
+      </section>
+
+
+<section class="content">
+
+        <button class="accordion">DO YOUR PRODUCTS NEED TO BE REFRIGERATED</button>
+           <div class="panel">
+             <p>No – not until you first open the carton. Our product is <a href="/pages/our-process" alt="Our Process Links">aseptically packaged</a> to stay fresh at room temperature when sealed. Once the seal is broken, refrigerate and consume within 5 to 7 days.</p>
+
+        </div>
+          </section>
+
+          <section class="content" style="text-align:center;">
+          <a class="btn" href="/pages/faq/" style="color:white;text-decoration: none;font-weight:600;font-size:18px;padding-left:50px;padding-right:50px;text-align: center">More FAQs</a>
+          </section>
+
+
+    </div>
+  </div>
+
+  
+
+</div>

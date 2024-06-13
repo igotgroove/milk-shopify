@@ -1,0 +1,7 @@
+{%- assign current_product_snippet = product.handle | prepend: 'product_' -%}
+
+{% capture  current_product_snippet_content %}{% include current_product_snippet %}{% endcapture %}
+
+{% unless current_product_snippet_content contains "Liquid error" %}
+  {{ current_product_snippet_content }}
+{% endunless %}

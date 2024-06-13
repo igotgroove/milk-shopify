@@ -1,0 +1,226 @@
+/**
+ * PowerReviews, Copyright 2019
+ * HEAD | 7e366e7ce | 3/27/2019
+ */
+/*******************************************/
+/** POWER REVIEWS STYLE OVERRIDE TEMPLATE **/
+/*******************************************/
+
+/**
+ * The following high-level CSS selectors can be utilized
+ * to create a custom style theme for all PowerReviews 
+ * content.
+ *
+ * NOTE: If you wish to hide PowerReviews content,
+ * please contact your PowerReviews Client Success
+ * Representative.  
+ */
+
+
+/**
+* TYPOGRAPHY
+* --------------------------------------------------
+* Global Color & Typography Definitions
+*/
+.p-w-r,
+.p-w-r span,
+.p-w-r p,
+.p-w-r h1,
+.p-w-r h2,
+.p-w-r h3,
+.p-w-r h4,
+.p-w-r h5,
+.p-w-r h6 {
+}
+.p-w-r a, .p-w-r a:hover {
+    color: inherit;
+    border-bottom: none;
+}
+
+/**
+* FORM LABELS
+* --------------------------------------------------
+* .p-w-r .pr-control-label > span // Selector that targets all field labels.
+*/
+.p-w-r .pr-control-label > span {
+}
+
+/**
+ * BUTTON GROUPS
+ * --------------------------------------------------
+ * .p-w-r .pr-btn // Selector that targets all buttons.
+ * .p-w-r .btn-toggle .pr-btn-default // Selector that targets all unselected toggle buttons.
+ * .p-w-r .btn-toggle .pr-btn-default.active // Selector that targets the selected toggle button.
+ * .p-w-r .pr-btn-add-tag-submit // Selector that targets the "Add" button that appears aside the custom tag text input field.
+ * .p-w-r .pr-btn-fileinput // Selector that targets the file input button.  
+ * .p-w-r .pr-btn-fileinput span // Selector that targets the file input button text.
+ * .p-w-r .pr-btn-delete // Selector that targets the image preview delete button.
+ */
+.p-w-r .pr-btn {
+}
+.p-w-r .pr-btn-add-tag-submit {
+}
+.p-w-r .pr-btn-fileinput {
+}
+.p-w-r .pr-btn-fileinput span {
+}
+.p-w-r .pr-btn-delete {
+}
+
+/**
+* STARS
+* Rating Stars can be customized by overriding the 
+* background-image property of the 5 Star-related
+* CSS classes
+* --------------------------------------------------
+* .pr-star-v4-0-filled    // Custom star image - filled 0%
+* .pr-star-v4-25-filled   // Custom star image - filled 25%
+* .pr-star-v4-50-filled   // Custom star image - filled 50%
+* .pr-star-v4-75-filled   // Custom star image - filled 75%
+* .pr-star-v4-100-filled  // Custom star image - filled 100%
+*/
+.p-w-r .pr-star-v4-0-filled {
+    background-image: url("data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjREVERURFIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIyIi8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTEwIDEzLjVsLTQuMTE0IDIuMTYzLjc4NS00LjU4MS0zLjMyOC0zLjI0NSA0LjYtLjY2OUwxMCAzbDIuMDU3IDQuMTY4IDQuNi42NjktMy4zMjggMy4yNDUuNzg1IDQuNTgxeiIvPjwvZz48L3N2Zz4=");
+}
+.p-w-r .pr-star-v4-25-filled {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjREVERURFIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIyIi8+PHBhdGggZD0iTTIgMGgzdjIwSDJhMiAyIDAgMCAxLTItMlYyYTIgMiAwIDAgMSAyLTJ6IiBmaWxsPSIjMTI4NzU3Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTEwIDEzLjVsLTQuMTE0IDIuMTYzLjc4NS00LjU4MS0zLjMyOC0zLjI0NSA0LjYtLjY2OUwxMCAzbDIuMDU3IDQuMTY4IDQuNi42NjktMy4zMjggMy4yNDUuNzg1IDQuNTgxeiIvPjwvZz48L3N2Zz4=);
+}
+.p-w-r .pr-star-v4-50-filled {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjREVERURFIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIyIi8+PHBhdGggZD0iTTIgMGg4djIwSDJhMiAyIDAgMCAxLTItMlYyYTIgMiAwIDAgMSAyLTJ6IiBmaWxsPSIjMTI4NzU3Ii8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTEwIDEzLjVsLTQuMTE0IDIuMTYzLjc4NS00LjU4MS0zLjMyOC0zLjI0NSA0LjYtLjY2OUwxMCAzbDIuMDU3IDQuMTY4IDQuNi42NjktMy4zMjggMy4yNDUuNzg1IDQuNTgxeiIvPjwvZz48L3N2Zz4=);
+}
+.p-w-r .pr-star-v4-75-filled {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjREVERURFIiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIyIi8+PHBhdGggZD0iTTIgMGgxM3YyMEgyYTIgMiAwIDAgMS0yLTJWMmEyIDIgMCAwIDEgMi0yeiIgZmlsbD0iIzEyODc1NyIvPjxwYXRoIGZpbGw9IiNGRkYiIGQ9Ik0xMCAxMy41bC00LjExNCAyLjE2My43ODUtNC41ODEtMy4zMjgtMy4yNDUgNC42LS42NjlMMTAgM2wyLjA1NyA0LjE2OCA0LjYuNjY5LTMuMzI4IDMuMjQ1Ljc4NSA0LjU4MXoiLz48L2c+PC9zdmc+);
+}
+.p-w-r .pr-star-v4-100-filled {
+    background-image: url(data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PGcgZmlsbD0ibm9uZSIgZmlsbC1ydWxlPSJldmVub2RkIj48cmVjdCBmaWxsPSIjMTI4NzU3IiB3aWR0aD0iMjAiIGhlaWdodD0iMjAiIHJ4PSIyIi8+PHBhdGggZmlsbD0iI0ZGRiIgZD0iTTEwIDEzLjVsLTQuMTE0IDIuMTYzLjc4NS00LjU4MS0zLjMyOC0zLjI0NSA0LjYtLjY2OUwxMCAzbDIuMDU3IDQuMTY4IDQuNi42NjktMy4zMjggMy4yNDUuNzg1IDQuNTgxeiIvPjwvZz48L3N2Zz4=);
+}
+
+.pr-star-v4 {
+    border-radius:50% !important;
+    height:25px !important;
+    width:25px !important;
+    margin-right:10px !important;
+    border:2px solid #128757;
+    box-shadow: 0 0 0 1px #128757;
+}
+
+/**
+* TEXT INPUTS
+* --------------------------------------------------
+* .p-w-r .pr-textinput  // Text Input Styles
+* .p-w-r .pr-textinput:focus // Focused Text Input Styles
+*/
+.p-w-r .pr-textinput {
+}
+.p-w-r .pr-textinput:focus {
+}
+
+/**
+* TEXT AREAS
+* --------------------------------------------------
+* .p-w-r input[type="text"] // Text Area Styles
+* .p-w-r input[type="text"]:focus // Focused Text Area Styles
+*/
+.p-w-r .pr-textarea {
+}
+.p-w-r .pr-textarea:focus {
+}
+
+/**
+* CHECKBOX/RADIO INPUT OPTION LABELS
+* --------------------------------------------------
+* .p-w-r .tag-label // Checkbox Radio Input Label Styles
+*/
+.p-w-r .pr-tag-label {
+}
+
+/**
+* ERROR STATES
+* --------------------------------------------------
+* .p-w-r .pr-has-error .control-label span // Form Field Label Error State Styles
+* .p-w-r .pr-has-error .form-control // Text Input & Text Area Error State Styles
+* .p-w-r .pr-has-error input[type="text"]:focus // Focused Text Input & Text Area Error State Styles
+*/
+.p-w-r .pr-has-error .pr-control-label span {
+}
+.p-w-r .pr-has-error .form-control {
+}
+.p-w-r .pr-has-error .pr-textinput:focus,
+.p-w-r .pr-has-error .pr-textarea:focus {
+}
+
+/**
+* MOBILE STYLES
+* --------------------------------------------------
+*/
+@media screen and (max-width: 767px) {
+    /**
+    * CHECKBOX/RADIO INPUT OPTION LABELS
+    * --------------------------------------------------
+    * .p-w-r .checkbox label, .p-w-r .radio label // Unselected Styles
+    * .p-w-r .checkbox label.checked, .p-w-r .radio label.checked // Selected Styles
+    */
+    .p-w-r .checkbox label,
+    .p-w-r .radio label {
+    }
+    .p-w-r .checkbox label.checked,
+    .p-w-r .radio label.checked {
+    }
+    .p-w-r .checkbox label.checked span,
+    .p-w-r .radio label.checked span {
+    }
+    /**
+    * TAG GROUP 'ADD ITEM' BUTTON
+    * --------------------------------------------------
+    */
+    .p-w-r .pr-btn-add-tag a {
+    }
+}
+
+.p-w-r .pr-review-snapshot .pr-ratings-histogram .pr-ratings-histogram-barValue {
+    background: #128757;
+}
+
+.p-w-r .pr-review-snapshot .pr-ratings-histogram .pr-histogram-label {
+    color:#128757;
+}
+
+.p-w-r .pr-review-snapshot .pr-ratings-histogram .pr-histogram-stars:hover .pr-ratings-histogram-barValue {
+    background:#0c5a3a;
+}
+
+.p-w-r .pr-read-review a, .p-w-r .pr-review-display a {
+    color:#000;
+}
+
+.p-w-r .pr-review-snapshot .pr-faceoff-readcomplete, .p-w-r .pr-review-snapshot .pr-faceoff-readcomplete:focus, .p-w-r .pr-review-snapshot .pr-faceoff-readcomplete:hover {
+    color:#128757;
+}
+
+.p-w-r .pr-read-review .pr-rd-pagination .pr-rd-pagination-btn, .p-w-r .pr-review-display .pr-rd-pagination .pr-rd-pagination-btn {
+    color:#128757;
+}
+
+a.pr-snippet-review-count, span.pr-snippet-review-count, a.pr-snippet-write-review-link {
+    color: #128757;
+    text-transform: uppercase;
+    font-size:18px !important;
+}
+
+#pwr-snippets {
+    margin-top:20px;
+    margin-bottom:15px;
+}
+
+/* HIDING */
+
+section.pr-review-snapshot-block.pr-review-snapshot-block-pros, section.pr-review-snapshot-block.pr-review-snapshot-block-cons, 
+.pr-snippet-reco-to-friend, .pr-review-snapshot-faceoff, .pr-snippet-rating-decimal, .pr-review-snapshot-block-histogram, 
+.pr-review-snapshot-header-intro, .pr-rd-bottomline  {
+    display:none !important;
+}
+
+a.pr-snippet-write-review-link:nth-of-type(2) {
+    display: none;
+}
+

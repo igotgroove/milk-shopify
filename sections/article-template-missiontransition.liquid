@@ -1,0 +1,128 @@
+{% assign current_articleMeta = article.metafields.global %}
+
+<div class="section-header medium-down--text-center" style="margin-bottom:0">
+  <div class="page-width" style="max-width:1500px;width:100%;">
+    {% if current_articleMeta['H1_Title'] %} 
+    <h1 class="article__title content" style="max-width:100%; text-align:center;">{{ current_articleMeta['H1_Title'] }}</h1>
+    {% else %}
+    <h1 class="article__title content" style="max-width:100%; text-align:center;">{{ article.title }}</h1>
+    {% endif %}
+  </div>
+</div>
+
+
+{% assign current_articleMeta = article.metafields.global %}
+
+<div class="rte">
+  <div class="blog-flex-container">
+
+    {% if current_articleMeta['Header_Image_Desktop'] and current_articleMeta['Header_Image_Mobile'] %} 
+    <p class="text-center one-whole">
+      <img src="{{ current_articleMeta['Header_Image_Desktop'] | file_img_url: 'master' }}" alt="" class="small--hide one-whole blog-hero-image lazyload" />
+
+      <img src="{{ current_articleMeta['Header_Image_Mobile'] | file_img_url: 'master' }}" alt="" class="medium-up--hide one-whole no-print lazyload" />
+    </p>
+
+    {% endif %}
+
+    <div class="page-width-blog-news-main">
+      <span class="article__author" style="text-align:center;font-weight:600;margin-bottom:30px;font-size:16px;margin-top:-10px;">Author: Nicholas Budniewski</span>
+      {{ article.content }}
+
+      <div id="sharing">
+      {% if section.settings.show_share_buttons %}
+        {% include 'social-sharing', share_title: article.title, share_permalink: article.url, share_image: article.image %}
+      {% endif %}
+      </div>
+
+    </div>
+
+    {% comment %}
+
+    {% endcomment %}
+    <div class="page-width-blog-news-side">
+      <h2 class="blog-sidebar underline">Newest Sustainability Articles</h2>
+      {% assign article_counter = 0 %}
+        {% for articleData in blogs.news.articles %}
+          {% if article_counter < 3 %}
+            {% if articleData.handle != article.handle and articleData.tags contains 'sustainability' %}
+              <div class="blog-sidebar-section"><img src="{{ articleData.image.src | img_url: '250x' }}" alt="{{ articleData.image.alt }}" class="blog-sidebar-image lazyload" />
+              <div class="blog-sidebar-product-text">
+                <a href="{{articleData.url}}" title="{{articleData.title}}"><h3 class="blog-sidebar">{{articleData.title}}</h3></a>
+                {% if articleData.excerpt %}
+                  <p class="blog-sidebar">{{articleData.excerpt}}</p>
+                {% endif %}
+                <a href="{{articleData.url}}" alt="" class="btn btn--secondary btn--small text-center blog-sidebar-button" aria-label="">Read More</a></div>
+              </div>
+            {% else %}
+              {% continue %}
+            {% endif %}
+            {% assign article_counter = article_counter | plus: 1 %}
+          {% endif %}
+        {% endfor %}      
+
+      </div>
+
+  </div>
+</div>
+
+
+
+
+{% schema %}
+{
+  "name": {
+    "de": "Posts",
+    "en": "Posts",
+    "es": "Publicaciones",
+    "fr": "Articles",
+    "it": "Articoli",
+    "ja": "投稿",
+    "pt-BR": "Posts"
+  },
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "blog_show_author",
+      "label": {
+        "de": "Autor anzeigen",
+        "en": "Show author",
+        "es": "Mostrar autor",
+        "fr": "Afficher l'auteur",
+        "it": "Mostra autore",
+        "ja": "執筆者を表示する",
+        "pt-BR": "Exibir autor(a)"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "blog_show_date",
+      "label": {
+        "de": "Datum anzeigen",
+        "en": "Show date",
+        "es": "Mostrar fecha",
+        "fr": "Afficher la date",
+        "it": "Mostra data",
+        "ja": "日付を表示する",
+        "pt-BR": "Exibir data"
+      },
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_share_buttons",
+      "label": {
+        "de": "Buttons für Social Media anzeigen",
+        "en": "Show social sharing buttons",
+        "es": "Mostrar botones para compartir en redes sociales",
+        "fr": "Afficher les boutons de partage sur les médias sociaux",
+        "it": "Mostra i pulsanti per la condivisione sui social",
+        "ja": "ソーシャル共有ボタンを表示する",
+        "pt-BR": "Exibir botões de compartilhamento em redes sociais"
+      },
+      "default": true
+    }
+  ]
+}
+{% endschema %}

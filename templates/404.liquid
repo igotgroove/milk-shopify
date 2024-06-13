@@ -1,0 +1,24 @@
+<div class="page-width">
+  <div class="empty-page-content text-center">
+
+  	<div class="grid" style="align-items:center;display:inline-flex;flex-wrap:wrap;">
+
+  		<div class="grid__item small--one-whole medium-up--one-half">
+  			<img src="{{ '404_EmptyGlass.jpg' | file_img_url: 'master' }}" alt="Empy Glass 404" style="width:100%;">
+		</div>
+
+    <div class="grid__item small--one-whole medium-up--one-half content404" style="display">
+
+    <h1 class="url404">{{ 'general.404.title' | t }}</h1>
+    <p class="url404" style="color:#000000;margin-bottom:55px;">{{ 'general.404.subtext' | t }}</p>
+    <p>
+      <a href="/" class="btn btn--has-icon-after" style="font-weight:600;padding-left:28px;padding-right:28px">{{ 'general.404.link' | t }}{% include 'icon-arrow-right' %}</a>
+    </p>
+
+</div>
+</div>
+  </div>
+</div>
+
+
+{% include 'SEOManager-404' %}

@@ -1,0 +1,114 @@
+<div id="shopify-section-16481442229d0f3d7a" class="shopify-section">
+  <div class="full-feature-row feature-row">
+    <div class="feature-row">
+      <div class="feature-row__item feature-row__text feature-row__text--left" style="padding: 0px">
+        <div id="FeatureRowImageWrapper-16481442229d0f3d7a" class="feature-row__image-wrapper js">
+          <div style="padding-top: 100%; position: relative;">
+            <video id="FeatureRowImage-16481442229d0f3d7a"
+              class="feature-row__image lazyload"
+              src="https://cdn.shopify.com/videos/c/o/v/14f76fdd341c4b7c81aa072024d605e2.mp4"
+              data-src="https://cdn.shopify.com/videos/c/o/v/14f76fdd341c4b7c81aa072024d605e2.mp4"
+              data-widths="[180, 360, 540, 720, 900, 1080, 1296, 1512, 1728, 2048]"
+              data-aspectratio="1.0"
+              data-sizes="auto"
+              alt="Unsweetened Milked Cashews"
+              muted></video>
+            <div id="playPauseIcon" class="play-pause-icon"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="feature-row__item feature-row__text feature-row__text--left">
+        <h2 class="h1">Our Mission</h2>
+        <div class="rte rte-setting featured-row__subtext">
+          <p>Plant-based is the way forward, but it’s time to set the bar higher. No more fillers, gums, or additives. Elmhurst is dedicated to making plant milks the way they’re meant to be - with the simplest ingredients and by maximizing their nutrition. Plant milks that actually taste like what they’re made from and do what they promise by using more of the nuts and grains you want and none of what you don’t. It’s Simpler. Better.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+  .play-pause-icon {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-size: 36px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+    opacity: 1;
+  }
+  .play-pause-icon:hover {
+    opacity: 0.8;
+  }
+  .hide {
+    opacity: 0;
+  }
+</style>
+
+<script>
+  function isElementInViewport(element) {
+    const rect = element.getBoundingClientRect();
+    const windowHeight = window.innerHeight || document.documentElement.clientHeight;
+    return (
+      rect.bottom >= 0 &&
+      rect.right >= 0 &&
+      rect.top <= windowHeight &&
+      rect.left <= (window.innerWidth || document.documentElement.clientWidth)
+    );
+  }
+
+  function playVideoIfInViewport() {
+    const video = document.getElementById("FeatureRowImage-16481442229d0f3d7a");
+    if (isElementInViewport(video) || video.currentTime > 0) {
+      video.play();
+      showPauseIcon();
+    } else {
+      video.pause();
+      showPlayIcon();
+    }
+  }
+
+  function showPlayIcon() {
+    const playPauseIcon = document.getElementById("playPauseIcon");
+    playPauseIcon.innerHTML = "&#9658;"; // Play symbol
+    playPauseIcon.classList.remove("hide");
+    setTimeout(() => {
+      playPauseIcon.classList.add("hide");
+    }, 1000);
+  }
+
+  function showPauseIcon() {
+    const playPauseIcon = document.getElementById("playPauseIcon");
+    playPauseIcon.innerHTML = "&#10074;&#10074;"; // Pause symbol
+    playPauseIcon.classList.remove("hide");
+    setTimeout(() => {
+      playPauseIcon.classList.add("hide");
+    }, 1000);
+  }
+
+  function toggleVideoPlayPause() {
+    const video = document.getElementById("FeatureRowImage-16481442229d0f3d7a");
+    if (video.paused) {
+      video.play();
+      showPauseIcon();
+    } else {
+      video.pause();
+      showPlayIcon();
+    }
+  }
+
+  const video = document.getElementById("FeatureRowImage-16481442229d0f3d7a");
+  video.addEventListener("click", toggleVideoPlayPause);
+
+  window.addEventListener("scroll", playVideoIfInViewport);
+</script>
